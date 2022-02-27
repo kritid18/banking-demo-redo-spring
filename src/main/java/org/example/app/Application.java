@@ -3,6 +3,7 @@ package org.example.app;
 import org.example.model.Customer;
 import org.example.repository.CustomerRepositoryDB;
 import org.example.repository.CustomerRepositoryStub;
+import org.example.service.CustomerService;
 import org.example.service.DefaultCustomerService;
 
 import java.util.List;
@@ -11,14 +12,23 @@ public class Application {
 
     public static void main(String[] args) {
 
-        CustomerRepositoryStub stubRespository = new CustomerRepositoryStub();
-        CustomerRepositoryDB dbRepository = new CustomerRepositoryDB();
+        //CustomerRepositoryStub stubRepository = new CustomerRepositoryStub();
 
-        DefaultCustomerService service = new DefaultCustomerService(dbRepository);
+        CustomerService service = new DefaultCustomerService(newCustomerRepositorydb());
 
-       // List<Customer> customers = service.getAllCustomer();
-        List<Customer> customers = service.getAllCustomerWithStars();
+        List<Customer> customers = service.getAllCustomer();
+       // List<Customer> customers = service.getAllCustomerWithStars();
 
         customers.forEach(System.out::println);
+    }
+
+    public static CustomerRepositoryDB newCustomerRepositorydb()
+    {
+        return new CustomerRepositoryDB();
+    }
+
+    public static CustomerRepositoryStub newCustomerRepositoryStub()
+    {
+        return new CustomerRepositoryStub();
     }
 }
